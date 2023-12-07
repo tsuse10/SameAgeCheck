@@ -23,11 +23,12 @@ def celebrities_result():
 
         try:
             page1 = wikipedia.page(cbr_name1)
-        except wikipedia.exceptions.DisambiguationError as de:
-            suggest1 = re.findall(r'may refer to:\s*(.*)\s*(.*)',str(de))
+            page2= wikipedia.page(cbr_name2)
+        except Exception as de:
+            suggest1 = re.findall(r'may refer to:\s*(.*)\s*(.*)\s*(.*)',str(de))
             print(suggest1)
-            return redirect('index.html',suggest = suggest1)
-        page2= wikipedia.page(cbr_name2)
+            return render_template('suggestion.html',suggest = suggest1)
+        
         bd_list1 = re.findall('(\d{1,4})年.*?(\d{1,2})月(\d{1,2})日', page1.summary)
         bd_list2 = re.findall('(\d{1,4})年.*?(\d{1,2})月(\d{1,2})日', page2.summary)
         bd_str1 = bd_list1[0][0] + '年' + bd_list1[0][1] + '月' + bd_list1[0][2] + '日'
