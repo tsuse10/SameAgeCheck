@@ -14,9 +14,11 @@
         </div>
         <div class="row text-center">
             <p>個人を特定できませんでした。</p>
-            {% for s in suggest %}
-                    <p>{{s}}</p>
-            {% endfor %}
+            <ul>
+                <li>{{suggest[0][[0]]}}</li>
+                <li>{{suggest[0][[1]]}}</li>
+                <li>{{suggest[0][[2]]}}</li>
+            </ul>
         </div>
         <div class="row">
             <footer><small>footer</small></footer>
