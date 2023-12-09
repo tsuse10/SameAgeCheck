@@ -21,17 +21,33 @@ def celebrities_result():
         cbr_name1 = request.form['name1']
         cbr_name2 = request.form['name2']
 
+        formExcepted = None
         try:
             page1 = wikipedia.page(cbr_name1)
-            page2= wikipedia.page(cbr_name2)
         except Exception as de:
             suggest = re.findall(r'may refer to:\s*(.*)\s*(.*)\s*(.*)',str(de)) 
+            formExcepted = "name1"
             dict = {
+                "formInfo" : formExcepted,
                 "candidate1" : suggest[0][0],
                 "candidate2" : suggest[0][1],
                 "candidate3" : suggest[0][2],    
             }
             return render_template('suggestion.html',dict = dict)
+        
+        try:
+            page2 = wikipedia.page(cbr_name2)
+        except Exception as de:
+            suggest = re.findall(r'may refer to:\s*(.*)\s*(.*)\s*(.*)',str(de)) 
+            formExcepted = "name2"
+            dict = {
+                "formInfo" : formExcepted,
+                "candidate1" : suggest[0][0],
+                "candidate2" : suggest[0][1],
+                "candidate3" : suggest[0][2],    
+            }
+            return render_template('suggestion.html',dict = dict)
+
         
         bd_list1 = re.findall('(\d{1,4})年.*?(\d{1,2})月(\d{1,2})日', page1.summary)
         bd_list2 = re.findall('(\d{1,4})年.*?(\d{1,2})月(\d{1,2})日', page2.summary)
