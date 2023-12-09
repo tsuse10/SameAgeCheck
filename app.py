@@ -25,9 +25,13 @@ def celebrities_result():
             page1 = wikipedia.page(cbr_name1)
             page2= wikipedia.page(cbr_name2)
         except Exception as de:
-            suggest1 = re.findall(r'may refer to:\s*(.*)\s*(.*)\s*(.*)',str(de))
-            print(suggest1)
-            return render_template('suggestion.html',suggest = suggest1)
+            suggest = re.findall(r'may refer to:\s*(.*)\s*(.*)\s*(.*)',str(de)) 
+            dict = {
+                "candidate1" : suggest[0][0],
+                "candidate2" : suggest[0][1],
+                "candidate3" : suggest[0][2],    
+            }
+            return render_template('suggestion.html',dict = dict)
         
         bd_list1 = re.findall('(\d{1,4})年.*?(\d{1,2})月(\d{1,2})日', page1.summary)
         bd_list2 = re.findall('(\d{1,4})年.*?(\d{1,2})月(\d{1,2})日', page2.summary)
